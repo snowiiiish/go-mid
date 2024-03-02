@@ -27,15 +27,12 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## API Structure
 
 Animal Shelter REST API
-
+```
 POST /animals
-
 GET /animals/:id
-
 PUT /animals/:id
-
 DELETE /animals/:id
-
+```
 
 ## Instances' Structure
 ```
