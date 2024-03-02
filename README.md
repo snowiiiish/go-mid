@@ -16,7 +16,7 @@ Anel Tulepbergen 22B030602
 
 Alina Amreyeva 22B031240
 
-Dossym Ibray  22BDossym
+Dossym Ibray  22B030545
 
 
 ## Build
