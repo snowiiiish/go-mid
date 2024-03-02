@@ -1,12 +1,12 @@
 # Project Description
 
-Our team has made the project dedicated to Animal Shelters. In this project we have implemented Frontend (HTML, CSS, TS) and Backend (Go, PostgreSQL).
+Our team has made the project dedicated to Animal Shelters. In this project we have implemented Backend (Go, PostgreSQL).
 
- This is the website where people can look for pets they can adopt (photos and other data) and also give up a pet.
+ This is the API where people can look for pets they can adopt (full data) and also give up a pet.
 
-There are 3 creatures: Admin, User and Animal. 
+There are 3 instances: Shelter, User and Animal. 
 
-Our team have made a database for pets, containing description data, RestAPI and functional website.  
+Our team have made a database for pets, containing description data and functional API.   
 
 ## Team Members
  
@@ -41,7 +41,6 @@ Users
 • Username (VARCHAR(30))
 • Password (encrypted password)
 • Number_of_phone_user(VARCHAR(50))
-• Profile_Picture_User(TEXT)
 • Role(Default “User”)
 Animal
 • ID(AUTO_INCREMENT PRIMARY KEY)
@@ -50,14 +49,12 @@ Animal
 • Name(VARCHAR(255))
 • Age(INTEGER)
 • Description(TEXT)
-• Animal_Picture(TEXT)
 Admins
 • AdminID(AUTO_INCREMENT PRIMARY KEY)
 • Admin_Email(TEXT)
 • Adminame (VARCHAR(30))
 • Password (encrypted password)
 • Number_of_phone_Admin(VARCHAR(50))
-• Profile_Picture_Admin(TEXT)
 • Role(VARCHAR(255), Type:Back_end, Front_end, G_admin, etc)
 Role
 • Permissions(TEXT)
