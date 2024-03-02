@@ -21,8 +21,7 @@ Dossym Ibray  22B030545
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
+Run go run main.go in the integrated terminal. 
 
 ## API Structure
 
