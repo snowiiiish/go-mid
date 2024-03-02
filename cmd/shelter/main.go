@@ -53,15 +53,10 @@ func (app *application) run() {
 
 	v1 := r.PathPrefix("/api/v1").Subrouter()
 
-	// Menu Singleton
-	// Create a new menu
-	v1.HandleFunc("/menus", app.createMenuHandler).Methods("POST")
-	// Get a specific menu
-	v1.HandleFunc("/menus/{menuId:[0-9]+}", app.getMenuHandler).Methods("GET")
-	// Update a specific menu
-	v1.HandleFunc("/menus/{menuId:[0-9]+}", app.updateMenuHandler).Methods("PUT")
-	// Delete a specific menu
-	v1.HandleFunc("/menus/{menuId:[0-9]+}", app.deleteMenuHandler).Methods("DELETE")
+	// Animal Singleton
+	v1.HandleFunc("/animals", app.createAnimalHandler).Methods("POST")
+	v1.HandleFunc("/animals/{animalId:[0-9]+}", app.getAnimalHandler).Methods("GET")
+	v1.HandleFunc("/animals/{animalId:[0-9]+}", app.deleteAnimalHandler).Methods("DELETE")
 
 	log.Printf("Starting server on %s\n", app.config.port)
 	err := http.ListenAndServe(app.config.port, r)

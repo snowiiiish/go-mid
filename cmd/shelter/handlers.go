@@ -26,11 +26,14 @@ func (app *application) respondWithJSON(w http.ResponseWriter, code int, payload
 	w.Write(response)
 }
 
-func (app *application) createMenuHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) createAnimalHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		Title          string `json:"title"`
+		ID             string `json:"id"`
+		Kind_Of_Animal string `json:"kind_of_animal"`
+		Kind_Of_Breed  string `json:"kind_of_breed"`
+		Name           string `json:"name"`
+		Age            string `json:"age"`
 		Description    string `json:"description"`
-		NutritionValue uint   `json:"nutritionValue"`
 	}
 
 	err := app.readJSON(w, r, &input)
@@ -42,7 +45,7 @@ func (app *application) createMenuHandler(w http.ResponseWriter, r *http.Request
 	animal := &model.Animal{
 		ID:             input.ID,
 		Kind_Of_Animal: input.Kind_Of_Animal,
-		Kind_Of_Breed:  input.Kind_0f_Breed,
+		Kind_Of_Breed:  input.Kind_Of_Breed,
 		Name:           input.Name,
 		Age:            input.Age,
 		Description:    input.Description,
@@ -57,28 +60,9 @@ func (app *application) createMenuHandler(w http.ResponseWriter, r *http.Request
 	app.respondWithJSON(w, http.StatusCreated, animal)
 }
 
-func (app *application) getMenuHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) getAnimalHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	param := vars["menuId"]
-
-	id, err := strconv.Atoi(param)
-	if err != nil || id < 1 {
-		app.respondWithError(w, http.StatusBadRequest, "Invalid menu ID")
-		return
-	}
-
-	animal, err := app.models.Menus.Get(id)
-	if err != nil {
-		app.respondWithError(w, http.StatusNotFound, "404 Not Found")
-		return
-	}
-
-	app.respondWithJSON(w, http.StatusOK, animal)
-}
-
-func (app *application) updateAnimalHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	param := vars["animalID"] // CHECK HERE FOR ERRORS
+	param := vars["animalID"]
 
 	id, err := strconv.Atoi(param)
 	if err != nil || id < 1 {
@@ -92,61 +76,73 @@ func (app *application) updateAnimalHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	var input struct {
-		ID             *string `json:"id"`
-		Kind_Of_Animal *string `json:"kind_of_animal"`
-		Kind_Of_Breed  *string `json:"kind_of_breed"`
-		Name           *string `json:"name"`
-		Age            *string `json:"age"`
-		Description    *string `json:"description"`
-	}
-
-	err = app.readJSON(w, r, &input)
-	if err != nil {
-		app.respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-
-	if input.Name != nil {
-		animal.Name = *animal.Name
-	}
-
-	if input.Kind_Of_Animal != nil {
-		animal.Kind_Of_Animal = *animal.Kind_0f_Animal
-	}
-
-	if input.Kind_Of_Breed != nil {
-		animal.Kind_Of_Breed = *animal.Kind_0f_Breed
-	}
-
-	if input.ID != nil {
-		animal.ID = *animal.ID
-	}
-
-	if input.Description != nil {
-		animal.Description = *animal.Description
-	}
-
-	if input.Age != nil {
-		animal.Age = *input.Age
-	}
-
-	err = app.models.Animals.Update(animal)
-	if err != nil {
-		app.respondWithError(w, http.StatusInternalServerError, "500 Internal Server Error")
-		return
-	}
-
 	app.respondWithJSON(w, http.StatusOK, animal)
 }
 
-func (app *application) deleteMenuHandler(w http.ResponseWriter, r *http.Request) {
+/*
+	 func (app *application) updateAnimalHandler(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		param := vars["animalID"] // CHECK HERE FOR ERRORS
+
+		id, err := strconv.Atoi(param)
+		if err != nil || id < 1 {
+			app.respondWithError(w, http.StatusBadRequest, "Invalid animal ID")
+			return
+		}
+
+		animal, err := app.models.Animals.Get(id)
+		if err != nil {
+			app.respondWithError(w, http.StatusNotFound, "404 Not Found")
+			return
+		}
+
+		var input struct {
+			ID             *string `json:"id"`
+			Kind_Of_Animal *string `json:"kind_of_animal"`
+			Kind_Of_Breed  *string `json:"kind_of_breed"`
+			Name           *string `json:"name"`
+			Age            *string `json:"age"`
+			Description    *string `json:"description"`
+		}
+
+		err = app.readJSON(w, r, &input)
+		if err != nil {
+			app.respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+			return
+		}
+
+		if input.Name != nil {
+			animal.Name = *input.Name
+		}
+
+		if input.Kind_Of_Animal != nil {
+			animal.Kind_Of_Animal = *input.Kind_Of_Animal
+		}
+
+		if input.Kind_Of_Breed != nil {
+			animal.Kind_Of_Breed = *input.Kind_Of_Breed
+		}
+
+		if input.ID != nil {
+			animal.ID = *input.ID
+		}
+
+		if input.Description != nil {
+			animal.Description = *input.Description
+		}
+
+		if input.Age != nil {
+			animal.Age = *input.Age
+		}
+	}
+*/
+func (app *application) deleteAnimalHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	param := vars["menuId"]
 
 	id, err := strconv.Atoi(param)
 	if err != nil || id < 1 {
-		app.respondWithError(w, http.StatusBadRequest, "Invalid animal ID")
+		app.respondWithError(w, http.StatusBadRequest, "Invalid menu ID")
 		return
 	}
 
