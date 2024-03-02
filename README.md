@@ -37,8 +37,8 @@ PUT /animals/:id
 DELETE /animals/:id
 
 
-## Creatures' Structure
-
+## Instances' Structure
+```
 Users
 • UserID (AUTO_INCREMENT PRIMARY KEY)
 • User_Email(TEXT)
@@ -65,3 +65,4 @@ Admins
 • Role(VARCHAR(255), Type:Back_end, Front_end, G_admin, etc)
 Role
 • Permissions(TEXT)
+```
