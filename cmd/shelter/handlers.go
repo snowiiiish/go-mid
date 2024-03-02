@@ -39,19 +39,22 @@ func (app *application) createMenuHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	menu := &model.Menu{
-		Title:          input.Title,
+	animal := &model.Animal{
+		ID:             input.ID,
+		Kind_Of_Animal: input.Kind_Of_Animal,
+		Kind_Of_Breed:  input.Kind_0f_Breed,
+		Name:           input.Name,
+		Age:            input.Age,
 		Description:    input.Description,
-		NutritionValue: input.NutritionValue,
 	}
 
-	err = app.models.Menus.Insert(menu)
+	err = app.models.Animals.Insert(animal)
 	if err != nil {
 		app.respondWithError(w, http.StatusInternalServerError, "500 Internal Server Error")
 		return
 	}
 
-	app.respondWithJSON(w, http.StatusCreated, menu)
+	app.respondWithJSON(w, http.StatusCreated, animal)
 }
 
 func (app *application) getMenuHandler(w http.ResponseWriter, r *http.Request) {
@@ -64,35 +67,38 @@ func (app *application) getMenuHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	menu, err := app.models.Menus.Get(id)
+	animal, err := app.models.Menus.Get(id)
 	if err != nil {
 		app.respondWithError(w, http.StatusNotFound, "404 Not Found")
 		return
 	}
 
-	app.respondWithJSON(w, http.StatusOK, menu)
+	app.respondWithJSON(w, http.StatusOK, animal)
 }
 
-func (app *application) updateMenuHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) updateAnimalHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	param := vars["menuId"]
+	param := vars["animalID"] // CHECK HERE FOR ERRORS
 
 	id, err := strconv.Atoi(param)
 	if err != nil || id < 1 {
-		app.respondWithError(w, http.StatusBadRequest, "Invalid menu ID")
+		app.respondWithError(w, http.StatusBadRequest, "Invalid animal ID")
 		return
 	}
 
-	menu, err := app.models.Menus.Get(id)
+	animal, err := app.models.Animals.Get(id)
 	if err != nil {
 		app.respondWithError(w, http.StatusNotFound, "404 Not Found")
 		return
 	}
 
 	var input struct {
-		Title          *string `json:"title"`
+		ID             *string `json:"id"`
+		Kind_Of_Animal *string `json:"kind_of_animal"`
+		Kind_Of_Breed  *string `json:"kind_of_breed"`
+		Name           *string `json:"name"`
+		Age            *string `json:"age"`
 		Description    *string `json:"description"`
-		NutritionValue *uint   `json:"nutritionValue"`
 	}
 
 	err = app.readJSON(w, r, &input)
@@ -101,25 +107,37 @@ func (app *application) updateMenuHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	if input.Title != nil {
-		menu.Title = *input.Title
+	if input.Name != nil {
+		animal.Name = *animal.Name
+	}
+
+	if input.Kind_Of_Animal != nil {
+		animal.Kind_Of_Animal = *animal.Kind_0f_Animal
+	}
+
+	if input.Kind_Of_Breed != nil {
+		animal.Kind_Of_Breed = *animal.Kind_0f_Breed
+	}
+
+	if input.ID != nil {
+		animal.ID = *animal.ID
 	}
 
 	if input.Description != nil {
-		menu.Description = *input.Description
+		animal.Description = *animal.Description
 	}
 
-	if input.NutritionValue != nil {
-		menu.NutritionValue = *input.NutritionValue
+	if input.Age != nil {
+		animal.Age = *input.Age
 	}
 
-	err = app.models.Menus.Update(menu)
+	err = app.models.Animals.Update(animal)
 	if err != nil {
 		app.respondWithError(w, http.StatusInternalServerError, "500 Internal Server Error")
 		return
 	}
 
-	app.respondWithJSON(w, http.StatusOK, menu)
+	app.respondWithJSON(w, http.StatusOK, animal)
 }
 
 func (app *application) deleteMenuHandler(w http.ResponseWriter, r *http.Request) {
@@ -128,11 +146,11 @@ func (app *application) deleteMenuHandler(w http.ResponseWriter, r *http.Request
 
 	id, err := strconv.Atoi(param)
 	if err != nil || id < 1 {
-		app.respondWithError(w, http.StatusBadRequest, "Invalid menu ID")
+		app.respondWithError(w, http.StatusBadRequest, "Invalid animal ID")
 		return
 	}
 
-	err = app.models.Menus.Delete(id)
+	err = app.models.Animals.Delete(id)
 	if err != nil {
 		app.respondWithError(w, http.StatusInternalServerError, "500 Internal Server Error")
 		return
