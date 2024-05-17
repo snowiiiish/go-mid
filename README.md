@@ -45,6 +45,23 @@ The Animal Shelter Project is a comprehensive backend solution developed by our 
 - `Number_of_phone_Admin` (VARCHAR(50))
 - `Role` (VARCHAR(255) Type: Back_end, Front_end, G_admin, etc.)
 
+#### Shelter
+- `AdminID` (AUTO_INCREMENT PRIMARY KEY)
+- `CreatedAT` (VARCHAR(30))
+- `UpdatedAT` (VARCHAR(30))
+- `TITLE` (TEXT)
+- `DESCRIPTION` (VARCHAR(50))
+- `ADDRESS` (VARCHAR(30))
+- `COORDINATES` (TEXT)
+
+#### Food
+- `ID` (AUTO_INCREMENT PRIMARY KEY)
+- `Name` (VARCHAR(30))
+- `Type` (VARCHAR(30))
+- `Quantity` (TEXT)
+- `Shelter` (VARCHAR(50))
+
+
 #### Role
 - `Permissions` (TEXT)
 
